@@ -17,55 +17,26 @@
             function ($scope) {
                 $scope.text = "My first AngularJS test";
             });
-        var myFunc = function () {
-            var str = "";
-            $('input[name="groupA"]:checked').each(
-                function () {
-                    str += $(this).val();
-                    str += "<br/>";
-                }
-        );
-            $("div.MyDiv").html(str);
-        }
-        $(function () {
-            $('input[name="groupA"]').click(myFunc);
-            $('input[name="groupA"]').css("color", "red");
-            $('input[name="groupA"]').slideUp(1000);
-            $('input[name="groupA"]').slideDown(1000);
-        })
     </script>
 </head>
 
 <Body>
     <div class="container">
-        <div class="MyDiv">Loading</div>
         <div>10+10 = {{10+10}}</div>
         <div ng-controller="myController">
-            {{text}}
-            
+            {{text}}            
         </div>
         <div>
+            <input type="text" ng-model="myText" />
+            <br />
+            <br />
+            {{myText}}
+            <br/>
             <input type="color" ng-model="myColor" />
             <br />
             <br />
             {{myColor}}
         </div>
-        <div>
-            <input type="checkbox" name="groupA" title="A" value="a element"/>
-            <input type="checkbox" name="groupA" title="B" value="b element"/>
-            <input type="checkbox" name="groupA" title="C" value="c element"/>
-    
-        </div>
-
-    </div>
-    <script type="text/javascript">
-        $(function () {
-            setTimeout(function () {
-                var str = "After 2000 ms";
-                $("div.MyDiv").html(str);
-            }
-        , 2000)
-        });
-    </script>
+     </div>
 </Body>
 </html>
