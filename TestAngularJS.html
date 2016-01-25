@@ -16,6 +16,10 @@
         myApp.controller("myController",
             function ($scope) {
                 $scope.text = "My first AngularJS test";
+                $scope.data = [{ num: 1 }, { num: 2 }, { num: 2 }, { num: 2 }];
+                $scope.add = function (x) {
+                    x.num++;
+                };
             });
     </script>
 </head>
@@ -24,19 +28,29 @@
     <div class="container">
         <div>10+10 = {{10+10}}</div>
         <div ng-controller="myController">
-            {{text}}            
+            {{text}}
         </div>
         <div>
             <input type="text" ng-model="myText" />
             <br />
-            <br />
             {{myText}}
-            <br/>
+            <br />
             <input type="color" ng-model="myColor" />
             <br />
-            <br />
-            {{myColor}}
+            <div style="color:{{myColor}}">
+                TEXT
+            </div>
+            <div ng-controller="myController">
+                <table>
+                    <tr ng-repeat="d in data">
+                        <td> {{d.num}}</td>
+                        <td>
+                            <input type="button" value="Add" ng-click="add(d)"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
-     </div>
+    </div>
 </Body>
 </html>

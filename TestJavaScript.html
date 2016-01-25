@@ -47,7 +47,12 @@
     <script type="text/javascript">
         $(function () {
             setTimeout(function () {
-                var str = "After 2000 ms";
+                var myJsonObject =
+                    {
+                        "Text":"After 2000 ms",
+                        "Note":"Some note"
+                    }
+                var str = myJsonObject.Text;
                 $("div.MyDiv").html(str);
             }
         , 2000)
