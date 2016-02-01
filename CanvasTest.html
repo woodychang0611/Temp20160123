@@ -1,0 +1,85 @@
+<html>
+<head>
+
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.js"></script>
+
+</head>
+<body>
+    <canvas id="myCanvas" width="600" height="600"></canvas>
+    <div id="output"></div>
+    <script>
+        //var canvas = document.getElementById('myCanvas');
+        canvas = $('#myCanvas')[0];
+        var context = canvas.getContext('2d');
+        var isDrawing = false;
+        var colors = ['red', 'blue', 'lime', 'yellow', 'orange'];
+        var colorIndex = 0;
+        var lastPos = { x: 0, y: 0 };
+    </script>
+
+    <script>
+        var count = 0;
+
+        function getXY(event) {
+            var offsetX = canvas.getBoundingClientRect().left;
+            var offsetY = canvas.getBoundingClientRect().top;
+            var x = event.clientX - offsetX;
+            var y = event.clientY - offsetY;
+            var pos = { x: x, y: y };
+            return pos;
+        }
+
+        function distance(pos1, pos2) {
+            var detX = (pos1.x - pos2.x);
+            var detY = (pos1.y - pos2.y);
+            return Math.sqrt(detX * detX + detY * detY);
+        }
+
+        function mouseDownReporter(event) {
+            count = 0;
+            $('#output').html("mouseDownReporter");
+            var pos = getXY(event);
+            context.beginPath();
+            context.moveTo(pos.x, pos.y);
+            context.strokeStyle = colors[colorIndex];
+            context.lineWidth = 5;
+            colorIndex = (colorIndex + 1) % colors.length;
+            isDrawing = true;
+        }
+        function mouseUpReporter() {
+            $('#output').html("mouseUpReporter");
+            isDrawing = false;
+        }
+
+        function mouseoutReporter() {
+            $('#output').html("mouseoutReporter");
+            isDrawing = false;
+        }
+
+        function mouseMoveReporter(event) {
+            if (isDrawing) {
+                var pos = getXY(event);
+                var str = "";
+                str = "x:" + pos.x + ",y:" + pos.y + ",count:" + count;
+                $('#output').html(str);
+                canvas = $('#myCanvas')[0];
+                if (distance(pos, lastPos) > 50) {
+                    count++;
+  
+                     context.lineTo(pos.x, pos.y);
+                  //  context.quadraticCurveTo(lastPos.x , lastPos.y, pos.x, pos.y);
+                    context.stroke();
+                    lastPos = pos;
+                }
+            }
+
+        }
+        canvas.addEventListener('mousedown', mouseDownReporter);
+        canvas.addEventListener('mouseup', mouseUpReporter);
+        canvas.addEventListener('mousemove', mouseMoveReporter);
+        canvas.addEventListener('mouseout', mouseoutReporter);
+    </script>
+
+</body>
+
+</html>
